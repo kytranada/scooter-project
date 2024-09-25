@@ -9,10 +9,30 @@ describe('User property tests', () => {
     expect(typeof user.username).toBe('string')
   })
   // test password
-
+  test('password should be a string', () => {
+    expect(typeof user.password).toBe('string')
+  })
   // test age
+  test('age should be a number', () => {
+    expect(typeof user.age).toBe('number')
+  })
 })
 
-// test login
+describe("User method tests", () => {
+  // test login
+  test('Login Method', ()=>{
+    user.login('test123')
+    expect(user.loggedIn).toBe(true)
+    expect(()=>{
+      user.login("test321")
+    }).toThrow(Error)
+  })
 
-// test logout
+  // test logout
+  test("Logout Method", () => {
+    user.logout()
+    expect(user.loggedIn).toBe(false)
+  })
+  
+})
+
