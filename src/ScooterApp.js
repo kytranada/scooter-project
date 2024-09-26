@@ -24,13 +24,13 @@ class ScooterApp {
   loginUser(username, password) {
     const user = this.registeredUsers[username];
     if (!user) {
-      throw new Error('Username or password is incorrect');
+      throw new Error('Username is incorrect');
     }
     try {
       user.login(password);
       console.log('User has been logged in');
     } catch (error) {
-      throw new Error('Username or password is incorrect');
+      throw new Error('Password is incorrect');
     }
   }
 
