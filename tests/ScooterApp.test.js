@@ -72,13 +72,13 @@ describe('createScooter method tests', () => {
 
 // rent scooter
 describe('rentScooter method tests', () => {
-  const user = new User('John Doe', 'password', 25);
-  const scooter = new Scooter('Station 1');
-  scooterApp.dockScooter(scooter, 'Station 1');
-  test('rents scooter to user if available', () => {
-    scooterApp.rentScooter(scooter, user);
-    expect(scooter.user).toBe(user);
-    expect(scooterApp.stations['Station 1']).not.toContain(scooter);
+  test('throws error if no scooters available at station', () => {
+    const user = new User('John Doe', 'password123', 25);
+    const station = 'Station 1';
+    scooterApp.stations[station] = [];
+    expect(() => {
+      scooterApp.rentScooter(user, station);
+    }).toThrowError('no scooters available at station');
   });
 });
 
