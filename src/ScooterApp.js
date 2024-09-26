@@ -53,6 +53,26 @@ class ScooterApp {
     return scooter;
   }
 
+  rentScooter(scooter, user) {
+    if (user.scooter) {
+      throw new Error('user is already renting another scooter');
+    }
+    for (const station in this.stations) {
+      const index = this.stations[station].indexOf(scooter);
+      if (index !== -1) {
+        if (scooter.user) {
+          throw new Error('scooter already rented');
+        }
+        this.stations[station].splice(index, 1);
+        scooter.rent(user);
+        user.scooter = scooter;
+        console.log('scooter is rented');
+        return;
+      }
+    }
+    throw new Error('scooter not found at any station');
+  }
+
   dockScooter(scooter, station) {
     if (!this.stations[station]) {
       throw new Error('no such station');
@@ -63,22 +83,6 @@ class ScooterApp {
     scooter.dock(station);
     this.stations[station].push(scooter);
     console.log('scooter is docked');
-  }
-
-  rentScooter(scooter, user) {
-    for (const station in this.stations) {
-      const index = this.stations[station].indexOf(scooter);
-      if (index !== -1) {
-        if (scooter.user) {
-          throw new Error('scooter already rented');
-        }
-        this.stations[station].splice(index, 1);
-        scooter.rent(user);
-        console.log('scooter is rented');
-        return;
-      }
-    }
-    throw new Error('scooter not found at any station');
   }
 
   print() {
